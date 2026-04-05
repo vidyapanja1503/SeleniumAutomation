@@ -1,68 +1,32 @@
 package org.example;
 
-class TestCase {
-    String testName;
-
-    TestCase(String testName) {
-        this.testName = testName;
-    }
-
-    void runTest() {
-        System.out.println("Running generic test: " + testName);
-    }
-}
-
-class UITest extends TestCase {
-    String browserName;
-
-    UITest(String testName, String browserName) {
-        super(testName);
-        this.browserName = browserName;
-    }
-
-    @Override
-    void runTest() {
-        System.out.println("UI Test: " + testName + " on " + browserName);
-    }
-}
-
-class APITest extends TestCase {
-    String endpoint;
-
-    APITest(String testName, String endpoint) {
-        super(testName);
-        this.endpoint = endpoint;
-    }
-
-    @Override
-    void runTest() {
-        System.out.println("API Test: " + testName + " → hitting " + endpoint);
-    }
-}
-
-class DBTest extends TestCase {
-    String query;
-
-    DBTest(String testName, String query) {
-        super(testName);
-        this.query = query;
-    }
-
-    @Override
-    void runTest() {
-        System.out.println("DB Test: " + testName + " → query: " + query);
-    }
-}
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
 
-        TestCase t1 = new UITest("Login Test", "Chrome");
-        TestCase t2 = new APITest("Create User", "/api/users");
-        TestCase t3 = new DBTest("Check Records", "SELECT * FROM users");
+        ArrayList<String> testData = new ArrayList<>();
+        testData.add("validUser");
+        testData.add("validPass");
 
-        t1.runTest();
-        t2.runTest();
-        t3.runTest();
+        try {
+            System.out.println("Test starting...");
+            System.out.println("Username: " + testData.get(0));
+            System.out.println("Password: " + testData.get(1));
+
+            // This will cause an error — index 5 doesn't exist!
+            System.out.println("Getting index 5: " + testData.get(5));
+
+            System.out.println("This line will never run");
+
+        } catch (Exception e) {
+            System.out.println("ERROR CAUGHT: " + e.getMessage());
+            System.out.println("Test marked as FAILED safely");
+
+        } finally {
+            System.out.println("Browser closed — cleanup done!");
+        }
+
+        System.out.println("Program continues after exception!");
     }
 }
